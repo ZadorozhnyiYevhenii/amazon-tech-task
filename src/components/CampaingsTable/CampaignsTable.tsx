@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import { IDataSoruce } from "@/types/IDataSource";
 import { IColumns } from "@/types/IColumns";
-import { useParams } from "react-router-dom";
+import { WrapperWithButton } from "../WrapperWithButton/WrapperWithButton";
 
 export const CampaignsTable: React.FC = () => {
   const [data, setData] = useState<IDataSoruce[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const { profileId } = useParams<{ profileId: string }>();
 
@@ -15,6 +17,7 @@ export const CampaignsTable: React.FC = () => {
       try {
         const response = await axios.get(`http://localhost:3001/campaigns?profileId=${profileId}`);
         setData(response.data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -32,6 +35,18 @@ export const CampaignsTable: React.FC = () => {
   ];
 
   return (
-    <Table columns={campaignColumns} dataSource={data} rowKey={(record) => record.id.toString()} />
+    <>
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        <WrapperWithButton>
+          <Table
+            columns={campaignColumns}
+            dataSource={data}
+            rowKey={(record) => record.id.toString()}
+          />
+        </WrapperWithButton>
+      )}
+    </>
   );
 };
