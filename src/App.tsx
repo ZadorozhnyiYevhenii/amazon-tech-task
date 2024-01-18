@@ -10,8 +10,8 @@ const App: React.FC = () => {
     <div className='main'>
       <Routes>
         <Route path='' element={<AccountTable />} />
-        <Route path='/profiles' element={<ProfilesTable />} />
-        <Route path='/campaigns' element={<CampaignsTable />} />
+        <Route path='/profiles/:accountId' element={<ProfilesTable />} />
+        <Route path='/campaigns/:profileId' element={<CampaignsTable />} />
       </Routes>
     </div>
   )

@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react"
 import { AntTable } from "../BaseTable/BaseTable"
 import axios from "axios";
+import { IDataSoruce } from "@/types/IDataSource";
+import { IColumns } from "@/types/IColumns";
+import { Link } from "react-router-dom";
 
 export const AccountTable: React.FC = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<IDataSoruce[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,17 +21,20 @@ export const AccountTable: React.FC = () => {
     fetchData();
   }, []);
 
-  const columns = [
+  const account: IColumns[] = [
     { title: "ID", dataIndex: "id", key: "id" },
     { title: "Email", dataIndex: "email", key: "email" },
     { title: "Auth Token", dataIndex: "authToken", key: "authToken" },
     { title: "Creation Date", dataIndex: "creationDate", key: "creationDate" },
+    {
+      title: "Profile",
+      dataIndex: "id",
+      key: "profileLink",
+      render: (accountId: number) => <Link to={`/profiles/${accountId}`}>View Profile</Link>,
+    },
   ];
 
   return (
-    <div>
-      <AntTable columns={columns} datasource={data} />
-    </div>
+    <AntTable columns={account} datasource={data} />
   )
-}
-
+};

@@ -3,4 +3,6 @@ export interface IDataSoruce {
   name: string;
   age: number;
   address: string;
+  id: string;
+  profileId: string;
 };
