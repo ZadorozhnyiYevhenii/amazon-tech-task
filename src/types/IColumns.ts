@@ -8,3 +8,4 @@ export interface IColumns {
   id?: number;
   email?: string;
 };
+

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Table, TableColumnsType } from "antd";
 import axios from "axios";
+import { Table } from "antd";
 import { IDataSoruce } from "@/types/IDataSource";
-import { IColumns } from "@/types/IColumns";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { WrapperWithButton } from "../WrapperWithButton/WrapperWithButton";
+import { Columns } from "../../utils/columns";
 
 export const ProfilesTable: React.FC = () => {
   const [data, setData] = useState<IDataSoruce[]>([]);
@@ -25,19 +25,6 @@ export const ProfilesTable: React.FC = () => {
     fetchData();
   }, [accountId]);
 
-  const profile: IColumns[] = [
-    { title: "id", dataIndex: "id", key: "id" },
-    { title: "accountId", dataIndex: "accountId", key: "accountId" },
-    { title: "country", dataIndex: "country", key: "country" },
-    { title: "marketplace", dataIndex: "marketplace", key: "marketplace" },
-    {
-      title: "Campaign info",
-      dataIndex: "id",
-      key: "id",
-      render: (profileId: number) => <Link to={`/campaigns/${profileId}`}>View Campaign</Link>,
-    },
-  ];
-
   return (
     <>
       {loading ? (
@@ -45,7 +32,7 @@ export const ProfilesTable: React.FC = () => {
       ) : (
         <WrapperWithButton>
           <Table
-            columns={profile}
+            columns={Columns.profile}
             dataSource={data}
             rowKey={(record) => record.id.toString()}
           />

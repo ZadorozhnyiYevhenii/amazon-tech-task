@@ -3,8 +3,8 @@ import { Table } from "antd";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { IDataSoruce } from "@/types/IDataSource";
-import { IColumns } from "@/types/IColumns";
 import { WrapperWithButton } from "../WrapperWithButton/WrapperWithButton";
+import { Columns } from "../../utils/columns";
 
 export const CampaignsTable: React.FC = () => {
   const [data, setData] = useState<IDataSoruce[]>([]);
@@ -26,14 +26,6 @@ export const CampaignsTable: React.FC = () => {
     fetchData();
   }, [profileId]);
 
-  const campaignColumns: IColumns[] = [
-    { title: "Campaign ID", dataIndex: "id", key: "id" },
-    { title: "profileId", dataIndex: "profileId", key: "profileId" },
-    { title: "Clicks", dataIndex: "clicks", key: "clicks" },
-    { title: "Cost", dataIndex: "cost", key: "cost" },
-    { title: "Date", dataIndex: "date", key: "date" },
-  ];
-
   return (
     <>
       {loading ? (
@@ -41,7 +33,7 @@ export const CampaignsTable: React.FC = () => {
       ) : (
         <WrapperWithButton>
           <Table
-            columns={campaignColumns}
+            columns={Columns.campaign}
             dataSource={data}
             rowKey={(record) => record.id.toString()}
           />
